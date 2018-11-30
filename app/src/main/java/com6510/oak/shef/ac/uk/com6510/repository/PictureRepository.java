@@ -25,6 +25,14 @@ public class PictureRepository {
         new InsertPictureAsyncTask(pictureDAO).execute(picture);
     }
 
+    public void update(Picture picture) {
+        new UpdatePictureAsyncTask(pictureDAO).execute(picture);
+    }
+
+    public void delete(Picture picture) {
+        new DeletePictureAsyncTask(pictureDAO).execute(picture);
+    }
+
     public LiveData<List<Picture>> getAllPictures() {
         return allPictures;
     }
@@ -49,6 +57,38 @@ public class PictureRepository {
         @Override
         protected Void doInBackground(Picture... pictures) {
             pictureDAO.insert(pictures[0]);
+            return null;
+        }
+    }
+
+    /**
+     * Update Async Task
+     */
+    public static class UpdatePictureAsyncTask extends AsyncTask<Picture, Void, Void> {
+        private PictureDAO pictureDAO;
+        public UpdatePictureAsyncTask(PictureDAO pictureDAO) {
+            this.pictureDAO = pictureDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Picture... pictures) {
+            pictureDAO.update(pictures[0]);
+            return null;
+        }
+    }
+
+    /**
+     * Delete Async Task
+     */
+    public static class DeletePictureAsyncTask extends AsyncTask<Picture, Void, Void> {
+        private PictureDAO pictureDAO;
+        public DeletePictureAsyncTask(PictureDAO pictureDAO) {
+            this.pictureDAO = pictureDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Picture... pictures) {
+            pictureDAO.delete(pictures[0]);
             return null;
         }
     }

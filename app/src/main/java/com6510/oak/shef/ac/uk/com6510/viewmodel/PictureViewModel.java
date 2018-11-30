@@ -26,6 +26,14 @@ public class PictureViewModel extends AndroidViewModel {
         repository.insert(picture);
     }
 
+    public void update(Picture picture) {
+        repository.update(picture);
+    }
+
+    public void delete(Picture picture) {
+        repository.delete(picture);
+    }
+
     public LiveData<List<Picture>> getAllPictures() {
         return allPictures;
     }
