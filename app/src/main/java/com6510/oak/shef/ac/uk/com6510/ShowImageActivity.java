@@ -28,7 +28,5 @@ public class ShowImageActivity extends AppCompatActivity {
             }
 
         }
-
-
     }
 }

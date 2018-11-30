@@ -18,8 +18,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.support.v7.widget.Toolbar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,12 +45,40 @@ public class MainActivity extends AppCompatActivity {
     private PictureAdapter adapter;
     private Context context;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        Intent intent;
+        switch (id) {
+            case R.id.menu_map:
+                intent = new Intent(this, MapActivity.class);
+                this.startActivity(intent);
+                return true;
+            case R.id.menu_search:
+                intent = new Intent(this, SearchActivity.class);
+                this.startActivity(intent);
+                return true;
+        }
+      return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
+        setTitle("Picture Manager - Gallery");
+
+//        Toolbar myToolbar = (Toolbar) findViewById(R.id.menu_toolbar);
+//        setSupportActionBar(myToolbar);
+
 
         final int numberOfColumns = 3;
 
@@ -57,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
 
-        adapter = new PictureAdapter();
+        adapter = new PictureAdapter(context);
         recyclerView.setAdapter(adapter);
 
         checkPermissions(getApplicationContext());

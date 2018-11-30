@@ -8,7 +8,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 
-@Database(entities = Picture.class, version = 2)
+@Database(entities = Picture.class, version = 3)
 public abstract class PictureDatabase extends RoomDatabase {
 
     private static PictureDatabase instance;

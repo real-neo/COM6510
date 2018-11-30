@@ -22,7 +22,11 @@ import com6510.oak.shef.ac.uk.com6510.database.Picture;
 public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureHolder> {
 
     private static List<Picture> pictures = new ArrayList<>();
-    private static Context context;
+    private Context context;
+
+    public PictureAdapter(Context cont) {
+        context = cont;
+    }
 
     @NonNull
     @Override
@@ -90,5 +94,9 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 
     public static List<Picture> getPictures() {
         return pictures;
+    }
+
+    private Context getContext() {
+        return this.context;
     }
 }
