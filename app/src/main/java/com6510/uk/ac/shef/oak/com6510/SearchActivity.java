@@ -1,4 +1,4 @@
-package com6510.oak.shef.ac.uk.com6510;
+package com6510.uk.ac.shef.oak.com6510;
 
 import android.content.Context;
 import android.content.Intent;

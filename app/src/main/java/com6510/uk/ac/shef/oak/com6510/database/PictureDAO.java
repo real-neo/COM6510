@@ -1,4 +1,4 @@
-package com6510.oak.shef.ac.uk.com6510.database;
+package com6510.uk.ac.shef.oak.com6510.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;

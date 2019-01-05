@@ -1,4 +1,4 @@
-package com6510.oak.shef.ac.uk.com6510;
+package com6510.uk.ac.shef.oak.com6510;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com6510.oak.shef.ac.uk.com6510.database.Picture;
+import com6510.uk.ac.shef.oak.com6510.database.Picture;
 
 public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureHolder> {
 
@@ -75,7 +75,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
     private List<Picture> getImageElements(List<File> returnedPhotos) {
         List<Picture> imageElementList= new ArrayList<>();
         for (File file: returnedPhotos){
-            Picture element= new Picture(file.getAbsolutePath(), "");
+            Picture element= new Picture(file.getAbsolutePath(), file.getName());
             imageElementList.add(element);
         }
         return imageElementList;

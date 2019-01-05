@@ -1,4 +1,4 @@
-package com6510.oak.shef.ac.uk.com6510;
+package com6510.uk.ac.shef.oak.com6510;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -21,15 +21,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.support.v7.widget.Toolbar;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com6510.oak.shef.ac.uk.com6510.database.Picture;
-import com6510.oak.shef.ac.uk.com6510.viewmodel.PictureViewModel;
+import com6510.uk.ac.shef.oak.com6510.database.Picture;
+import com6510.uk.ac.shef.oak.com6510.viewmodel.PictureViewModel;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 
@@ -85,11 +83,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.grid_recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
 
         activity = this;
 
         adapter = new PictureAdapter(context);
         recyclerView.setAdapter(adapter);
+//        adapter.setHasStableIds(true); // when it's enabled, app CRASHES!!!
 
         checkPermissions(getApplicationContext());
 
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
     private void addImageElements(List<File> returnedPhotos) {
         List<Picture> imageElementList= new ArrayList<>();
         for (File file: returnedPhotos){
-            Picture element= new Picture(file.getAbsolutePath(), "");
+            Picture element= new Picture(file.getAbsolutePath(), file.getName());
             imageElementList.add(element);
             viewModel.getRepository().insert(element);
         }

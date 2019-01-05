@@ -1,4 +1,4 @@
-package com6510.oak.shef.ac.uk.com6510.repository;
+package com6510.uk.ac.shef.oak.com6510.repository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -6,9 +6,9 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-import com6510.oak.shef.ac.uk.com6510.database.Picture;
-import com6510.oak.shef.ac.uk.com6510.database.PictureDAO;
-import com6510.oak.shef.ac.uk.com6510.database.PictureDatabase;
+import com6510.uk.ac.shef.oak.com6510.database.Picture;
+import com6510.uk.ac.shef.oak.com6510.database.PictureDAO;
+import com6510.uk.ac.shef.oak.com6510.database.PictureDatabase;
 
 public class PictureRepository {
 

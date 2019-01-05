@@ -1,4 +1,4 @@
-package com6510.oak.shef.ac.uk.com6510;
+package com6510.uk.ac.shef.oak.com6510;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
-import com6510.oak.shef.ac.uk.com6510.database.Picture;
+import com6510.uk.ac.shef.oak.com6510.database.Picture;
 
 public class ShowImageActivity extends AppCompatActivity {
     @Override

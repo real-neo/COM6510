@@ -1,4 +1,4 @@
-package com6510.oak.shef.ac.uk.com6510.viewmodel;
+package com6510.uk.ac.shef.oak.com6510.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -8,8 +8,8 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import com6510.oak.shef.ac.uk.com6510.repository.PictureRepository;
-import com6510.oak.shef.ac.uk.com6510.database.Picture;
+import com6510.uk.ac.shef.oak.com6510.repository.PictureRepository;
+import com6510.uk.ac.shef.oak.com6510.database.Picture;
 
 public class PictureViewModel extends AndroidViewModel {
 
