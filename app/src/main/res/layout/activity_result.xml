@@ -1,0 +1,15 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="uk.ac.shef.oak.com6510.ResultActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/grid_recycler_view_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center" />
+
+</android.support.design.widget.CoordinatorLayout>
