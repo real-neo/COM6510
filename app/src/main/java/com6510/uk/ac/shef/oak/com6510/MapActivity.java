@@ -4,6 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,11 +30,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import com6510.uk.ac.shef.oak.com6510.database.Picture;
+import com6510.uk.ac.shef.oak.com6510.viewmodel.PictureViewModel;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -42,8 +53,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private static final int ACCESS_FINE_LOCATION = 123;
     private LocationRequest mLocationRequest;
     private FusedLocationProviderClient mFusedLocationClient;
-    private MapView mapView;
     private PendingIntent mLocationPendingIntent;
+    private PictureViewModel viewModel;
+    private static List<Picture> pictures;
+    private static Marker myMarker;
+    private static HashMap<Marker, Picture> markers;
 
     public static Activity getActivity() {
         return activity;
@@ -92,12 +106,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        markers = new HashMap<>();
         initLocations();
+        getPictures();
     }
 
     @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
-        return super.onCreateView(name, context, attrs);
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(parent, name, context, attrs);
     }
 
     private void initLocations() {
@@ -127,13 +143,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
+/*        mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);*/
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         //startLocationUpdates(this);
@@ -220,5 +237,47 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        setMarker();
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+/*                Map dataModel = (Map)markers.get(marker);
+                String title = (String)dataModel.get("title");
+                markerOnClick(title);*/
+                marker.setTitle(markers.get(marker).getTitle());
+                return false;
+            }
+        });
+    }
+
+    public static void setMarker() {
+        for (Picture p : pictures) {
+            if(p.getLon() != 0.0 && p.getLat() != 0.0) {
+                myMarker = mMap.addMarker(
+                        new MarkerOptions()
+                                .position(new LatLng(p.getLat(), p.getLon()))
+                                .visible(true)
+                        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_brightness_1_black_24dp))
+                );
+                markers.put(myMarker, p);
+            }
+        }
+    }
+    // PUT EXTRA FOR ID AND SET ONCLICK LISTENER FOR EACH MARKER BASED ON ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    public List<Picture> getPictures() {
+        pictures = PictureAdapter.getPictures();
+        return pictures;
     }
 }

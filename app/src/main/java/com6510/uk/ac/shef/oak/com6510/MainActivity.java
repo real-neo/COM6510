@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.ExifInterface;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -210,21 +212,63 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onPhotosReturned(List<File> returnedPhotos) {
-        addImageElements(returnedPhotos);
+        try {
+            addImageElements(returnedPhotos);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         adapter.notifyDataSetChanged();
         recyclerView.scrollToPosition(returnedPhotos.size() - 1);
     }
 
-    private void addImageElements(List<File> returnedPhotos) {
+    private void addImageElements(List<File> returnedPhotos) throws IOException {
         List<Picture> imageElementList= new ArrayList<>();
+        ExifInterface exif;
         for (File file: returnedPhotos){
             Picture element= new Picture(file.getAbsolutePath(), file.getName());
+            exif = new ExifInterface(file.getAbsolutePath());
+            String lat = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+            String lon = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+            // also set date and stuff
+            Double dlat = null, dlon = null;
+            if (lat != null || lon != null) {
+                dlat = convertToDegree(lat);
+                dlon = convertToDegree(lon);
+                element.setLat(dlat);
+                element.setLon(dlon);
+            }
             imageElementList.add(element);
             viewModel.getRepository().insert(element);
         }
     }
 
+    private Double convertToDegree(String stringDMS){
+        Double result = null;
+        String[] DMS = stringDMS.split(",", 3);
+
+        String[] stringD = DMS[0].split("/", 2);
+        Double D0 = new Double(stringD[0]);
+        Double D1 = new Double(stringD[1]);
+        Double FloatD = D0/D1;
+
+        String[] stringM = DMS[1].split("/", 2);
+        Double M0 = new Double(stringM[0]);
+        Double M1 = new Double(stringM[1]);
+        Double FloatM = M0/M1;
+
+        String[] stringS = DMS[2].split("/", 2);
+        Double S0 = new Double(stringS[0]);
+        Double S1 = new Double(stringS[1]);
+        Double FloatS = S0/S1;
+
+        result = new Double(FloatD + (FloatM/60) + (FloatS/3600));
+
+        return result;
+    }
+
     public Activity getActivity() {
         return activity;
     }
+
 }
