@@ -10,31 +10,16 @@ import android.widget.TextView;
 import uk.ac.shef.oak.com6510.database.Picture;
 
 public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> {
-	private Picture element;
 	private String[][] info;
 
-	public static class MyViewHolder extends RecyclerView.ViewHolder {
-		private TextView name;
-		private TextView value;
-
-		public MyViewHolder(View v) {
-			super(v);
-			name = v.findViewById(R.id.info_name);
-			value = v.findViewById(R.id.info_value);
-		}
-	}
-
-	public InfoAdapter(Picture element) {
-		this.element = element;
+	InfoAdapter(Picture element) {
 		this.info = element.getInfo();
 	}
 
 	@NonNull
 	@Override
 	public InfoAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View v = LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.info_text_view, parent, false);
-
+		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.info_text_view, parent, false);
 		return new MyViewHolder(v);
 	}
 
@@ -47,5 +32,16 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> 
 	@Override
 	public int getItemCount() {
 		return info.length;
+	}
+
+	static class MyViewHolder extends RecyclerView.ViewHolder {
+		private TextView name;
+		private TextView value;
+
+		MyViewHolder(View v) {
+			super(v);
+			name = v.findViewById(R.id.info_name);
+			value = v.findViewById(R.id.info_value);
+		}
 	}
 }

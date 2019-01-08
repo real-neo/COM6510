@@ -26,16 +26,33 @@ public class Picture implements Serializable {
 	@ColumnInfo(name = "date")
 	private String date;
 
+	public Picture(String picturePath, String title) {
+		this.picturePath = picturePath;
+		this.title = title;
+
+		try {
+			ExifInterface exifInterface = new ExifInterface(picturePath);
+
+			double latLong[] = exifInterface.getLatLong();
+			this.lat = latLong != null ? latLong[0] : 0;
+			this.lon = latLong != null ? latLong[1] : 0;
+
+			this.date = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public int getId() {
 		return id;
 	}
 
-	public String getPicturePath() {
-		return picturePath;
-	}
-
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getPicturePath() {
+		return picturePath;
 	}
 
 	public String getTitle() {
@@ -58,7 +75,7 @@ public class Picture implements Serializable {
 		return lat;
 	}
 
-	public void setLat(double lat) {
+	void setLat(double lat) {
 		this.lat = lat;
 	}
 
@@ -66,7 +83,7 @@ public class Picture implements Serializable {
 		return lon;
 	}
 
-	public void setLon(double lon) {
+	void setLon(double lon) {
 		this.lon = lon;
 	}
 
@@ -74,25 +91,8 @@ public class Picture implements Serializable {
 		return date;
 	}
 
-	public void setDate(String date) {
+	void setDate(String date) {
 		this.date = date;
-	}
-
-	public Picture(String picturePath, String title) {
-		this.picturePath = picturePath;
-		this.title = title;
-
-		try {
-			ExifInterface exifInterface = new ExifInterface(picturePath);
-
-			double latLong[] = exifInterface.getLatLong();
-			this.lat = latLong != null ? latLong[0] : 0;
-			this.lon = latLong != null ? latLong[1] : 0;
-
-			this.date = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public String[][] getInfo() {

@@ -2,7 +2,6 @@ package uk.ac.shef.oak.com6510;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +21,6 @@ public class ResultActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
-		Context context = getApplicationContext();
 		setTitle("Picture Manager - Result");
 
 		final int numberOfColumns = 3;
@@ -32,7 +30,7 @@ public class ResultActivity extends AppCompatActivity {
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setNestedScrollingEnabled(false);
 
-		adapter = new PictureAdapter(context);
+		adapter = new PictureAdapter();
 		recyclerView.setAdapter(adapter);
 
 		PictureViewModel viewModel = ViewModelProviders.of(this).get(PictureViewModel.class);

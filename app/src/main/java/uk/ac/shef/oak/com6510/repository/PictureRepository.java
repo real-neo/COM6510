@@ -12,88 +12,83 @@ import uk.ac.shef.oak.com6510.database.PictureDatabase;
 
 public class PictureRepository {
 
-    public PictureDAO pictureDAO;
-    private LiveData<List<Picture>> allPictures;
+	private PictureDAO pictureDAO;
+	private LiveData<List<Picture>> allPictures;
 
-    public PictureRepository(Application application) {
-        PictureDatabase database = PictureDatabase.getInstance(application);
-        pictureDAO = database.pictureDAO();
-        allPictures = pictureDAO.getAllPictures();
-    }
+	public PictureRepository(Application application) {
+		PictureDatabase database = PictureDatabase.getInstance(application);
+		pictureDAO = database.pictureDAO();
+		allPictures = pictureDAO.getAllPictures();
+	}
 
-    public void insert(Picture picture) {
-        new InsertPictureAsyncTask(pictureDAO).execute(picture);
-    }
+	public void insert(Picture picture) {
+		new InsertPictureAsyncTask(pictureDAO).execute(picture);
+	}
 
-    public void update(Picture picture) {
-        new UpdatePictureAsyncTask(pictureDAO).execute(picture);
-    }
+	public void update(Picture picture) {
+		new UpdatePictureAsyncTask(pictureDAO).execute(picture);
+	}
 
-    public void delete(Picture picture) {
-        new DeletePictureAsyncTask(pictureDAO).execute(picture);
-    }
+	public void delete(Picture picture) {
+		new DeletePictureAsyncTask(pictureDAO).execute(picture);
+	}
 
-    public LiveData<List<Picture>> getAllPictures() {
-        return allPictures;
-    }
+	public LiveData<List<Picture>> getAllPictures() {
+		return allPictures;
+	}
 
-    public LiveData<List<Picture>> search(String key) {
-	    return pictureDAO.search(key);
-    }
+	public LiveData<List<Picture>> search(String key) {
+		return pictureDAO.search(key);
+	}
 
-    public PictureDAO getPictureDAO() {
-        return pictureDAO;
-    }
+	/**
+	 * Insert Async Task
+	 */
+	public static class InsertPictureAsyncTask extends AsyncTask<Picture, Void, Void> {
+		private PictureDAO pictureDAO;
 
-    public void setPictureDAO(PictureDAO pictureDAO) {
-        this.pictureDAO = pictureDAO;
-    }
+		InsertPictureAsyncTask(PictureDAO pictureDAO) {
+			this.pictureDAO = pictureDAO;
+		}
 
-    /**
-     * Insert Async Task
-     */
-    public static class InsertPictureAsyncTask extends AsyncTask<Picture, Void, Void> {
-        private PictureDAO pictureDAO;
-        public InsertPictureAsyncTask(PictureDAO pictureDAO) {
-            this.pictureDAO = pictureDAO;
-        }
+		@Override
+		protected Void doInBackground(Picture... pictures) {
+			pictureDAO.insert(pictures[0]);
+			return null;
+		}
+	}
 
-        @Override
-        protected Void doInBackground(Picture... pictures) {
-            pictureDAO.insert(pictures[0]);
-            return null;
-        }
-    }
+	/**
+	 * Update Async Task
+	 */
+	public static class UpdatePictureAsyncTask extends AsyncTask<Picture, Void, Void> {
+		private PictureDAO pictureDAO;
 
-    /**
-     * Update Async Task
-     */
-    public static class UpdatePictureAsyncTask extends AsyncTask<Picture, Void, Void> {
-        private PictureDAO pictureDAO;
-        public UpdatePictureAsyncTask(PictureDAO pictureDAO) {
-            this.pictureDAO = pictureDAO;
-        }
+		UpdatePictureAsyncTask(PictureDAO pictureDAO) {
+			this.pictureDAO = pictureDAO;
+		}
 
-        @Override
-        protected Void doInBackground(Picture... pictures) {
-            pictureDAO.update(pictures[0]);
-            return null;
-        }
-    }
+		@Override
+		protected Void doInBackground(Picture... pictures) {
+			pictureDAO.update(pictures[0]);
+			return null;
+		}
+	}
 
-    /**
-     * Delete Async Task
-     */
-    public static class DeletePictureAsyncTask extends AsyncTask<Picture, Void, Void> {
-        private PictureDAO pictureDAO;
-        public DeletePictureAsyncTask(PictureDAO pictureDAO) {
-            this.pictureDAO = pictureDAO;
-        }
+	/**
+	 * Delete Async Task
+	 */
+	public static class DeletePictureAsyncTask extends AsyncTask<Picture, Void, Void> {
+		private PictureDAO pictureDAO;
 
-        @Override
-        protected Void doInBackground(Picture... pictures) {
-            pictureDAO.delete(pictures[0]);
-            return null;
-        }
-    }
+		DeletePictureAsyncTask(PictureDAO pictureDAO) {
+			this.pictureDAO = pictureDAO;
+		}
+
+		@Override
+		protected Void doInBackground(Picture... pictures) {
+			pictureDAO.delete(pictures[0]);
+			return null;
+		}
+	}
 }

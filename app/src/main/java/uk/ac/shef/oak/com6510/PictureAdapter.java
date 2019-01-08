@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,10 +26,6 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 	private List<Picture> pictures = new ArrayList<>();
 	private static List<Picture> allPictures = new ArrayList<>();
 	private Context context;
-
-	public PictureAdapter(Context cont) {
-		context = cont;
-	}
 
 	@NonNull
 	@Override
@@ -65,9 +60,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 			Matrix matrix = new Matrix();
 			matrix.postRotate(degree);
 
-//			Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
 			Bitmap bitmap = decodeSampledBitmapFromResource(file.getAbsolutePath(), 100, 100);
-
 			Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
 			pictureHolder.imageViewPicture.setImageBitmap(rotated);
@@ -86,7 +79,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 		}
 	}
 
-	public static Bitmap decodeSampledBitmapFromResource(String filePath, int reqWidth, int reqHeight) {
+	static Bitmap decodeSampledBitmapFromResource(String filePath, int reqWidth, int reqHeight) {
 		// First decode with inJustDecodeBounds=true to check dimensions
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -100,7 +93,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 		return BitmapFactory.decodeFile(filePath, options);
 	}
 
-	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+	private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
 		// Raw height and width of image
 		final int height = options.outHeight;
 		final int width = options.outWidth;
@@ -124,20 +117,20 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 		return pictures.size();
 	}
 
-	public void setPictures(List<Picture> pictures) {
+	void setPictures(List<Picture> pictures) {
 		this.pictures = pictures;
 		notifyDataSetChanged();
 	}
 
-	public static void setAllPictures(List<Picture> allPictures) {
+	static void setAllPictures(List<Picture> allPictures) {
 		PictureAdapter.allPictures = allPictures;
 	}
 
-	public void onPhotosReturned(List<File> returnedPhotos, RecyclerView recyclerView) {
+	void onPhotosReturned(List<File> returnedPhotos, RecyclerView recyclerView) {
 		pictures.addAll(getImageElements(returnedPhotos));
 		setPictures(pictures);
-		//notifyDataSetChanged();
-		//recyclerView.scrollToPosition(returnedPhotos.size() - 1);
+//		notifyDataSetChanged();
+//		recyclerView.scrollToPosition(returnedPhotos.size() - 1);
 	}
 
 	private List<Picture> getImageElements(List<File> returnedPhotos) {
@@ -153,14 +146,14 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 		private ImageView imageViewPicture;
 		private TextView textViewTitle;
 
-		public PictureHolder(@NonNull View itemView) {
+		PictureHolder(@NonNull View itemView) {
 			super(itemView);
 			imageViewPicture = itemView.findViewById(R.id.picture);
 			textViewTitle = itemView.findViewById(R.id.picture_title);
 		}
 	}
 
-	public static List<Picture> getAllPictures() {
+	static List<Picture> getAllPictures() {
 		return allPictures;
 	}
 }

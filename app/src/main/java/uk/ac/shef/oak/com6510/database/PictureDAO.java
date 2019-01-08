@@ -12,18 +12,18 @@ import java.util.List;
 @Dao
 public interface PictureDAO {
 
-    @Insert
-    void insert(Picture picture);
+	@Insert
+	void insert(Picture picture);
 
-    @Update
-    void update(Picture picture);
+	@Update
+	void update(Picture picture);
 
-    @Delete
-    void delete(Picture picture);
+	@Delete
+	void delete(Picture picture);
 
-    @Query("SELECT * FROM picture_table ORDER BY id")
-    LiveData<List<Picture>> getAllPictures();
+	@Query("SELECT * FROM picture_table ORDER BY id")
+	LiveData<List<Picture>> getAllPictures();
 
-    @Query("SELECT * FROM picture_table WHERE title LIKE :key OR description LIKE :key")
-    LiveData<List<Picture>> search(String key);
+	@Query("SELECT * FROM picture_table WHERE title LIKE :key OR description LIKE :key")
+	LiveData<List<Picture>> search(String key);
 }

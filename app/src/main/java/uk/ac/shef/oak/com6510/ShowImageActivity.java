@@ -24,6 +24,7 @@ public class ShowImageActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
+		setTitle("Picture Manager - Show");
 
 		ImageView imageView = findViewById(R.id.show_picture);
 		FloatingActionButton fab = findViewById(R.id.fab_info);
@@ -50,7 +51,6 @@ public class ShowImageActivity extends AppCompatActivity {
 				Matrix matrix = new Matrix();
 				matrix.postRotate(degree);
 
-//				Bitmap myBitmap = BitmapFactory.decodeFile(element.getPicturePath());
 				Bitmap myBitmap = decodeSampledBitmapFromResource(element.getPicturePath(), 1000, 1000);
 				Bitmap rotated = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
 
