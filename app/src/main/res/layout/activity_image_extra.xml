@@ -11,17 +11,20 @@
         android:id="@+id/extra_picture"
         android:layout_width="match_parent"
         android:layout_height="253dp" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/extra_title"/>
+        android:id="@+id/extra_title"
+        android:layout_width="match_parent"
+        android:layout_height="56dp" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/extra_description"/>
+        android:id="@+id/extra_description"
+        android:layout_width="match_parent"
+        android:layout_height="59dp" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/extra_date"/>
+        android:id="@+id/extra_date"
+        android:layout_width="398dp"
+        android:layout_height="59dp" />
 
 </LinearLayout>
