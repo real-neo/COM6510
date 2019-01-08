@@ -230,6 +230,9 @@ public class MainActivity extends AppCompatActivity {
             exif = new ExifInterface(file.getAbsolutePath());
             String lat = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
             String lon = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+
+            String date = exif.getAttribute(ExifInterface.TAG_DATETIME);
+            element.setDate(date);
             // also set date and stuff
             Double dlat = null, dlon = null;
             if (lat != null || lon != null) {

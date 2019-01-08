@@ -9,7 +9,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -163,11 +166,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
             mCurrentLocation = locationResult.getLastLocation();
-            mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-            Log.i("MAP", "new location " + mCurrentLocation.toString());
+            //mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+            //Log.i("MAP", "new location " + mCurrentLocation.toString());
             if (mMap != null)
-                mMap.addMarker(new MarkerOptions().position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
-                        .title(mLastUpdateTime));
+/*                mMap.addMarker(new MarkerOptions().position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
+                        .title(mLastUpdateTime));*/
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 14.0f));
         }
     };
@@ -252,10 +255,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-/*                Map dataModel = (Map)markers.get(marker);
-                String title = (String)dataModel.get("title");
-                markerOnClick(title);*/
-                marker.setTitle(markers.get(marker).getTitle());
+                //marker.setTitle(markers.get(marker).getTitle());
+                Intent intent = new Intent(context, ImageExtraActivity.class);
+                //intent.putExtra("position", pictures.get(marker));
+                intent.putExtra("path", markers.get(marker).getPicturePath());
+                intent.putExtra("title", markers.get(marker).getTitle());
+                intent.putExtra("description", markers.get(marker).getDescription());
+                intent.putExtra("date", markers.get(marker).getDate());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
                 return false;
             }
         });
