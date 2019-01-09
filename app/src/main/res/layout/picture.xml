@@ -8,14 +8,13 @@
         android:id="@+id/picture"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:padding="10dp" />
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/picture_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:padding="10dp" />
+        android:padding="5dp" />
 
 </LinearLayout>

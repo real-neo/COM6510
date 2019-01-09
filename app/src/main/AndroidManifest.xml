@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="uk.ac.shef.oak.com6510">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -20,7 +21,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -29,7 +31,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="uk.ac.shef.oak.com6510.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,13 +39,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="uk.ac.shef.oak.com6510.ShowImageActivity" />
+        <activity android:name=".ShowImageActivity" />
 
-        <activity android:name="uk.ac.shef.oak.com6510.MapActivity" />
-        <activity android:name="uk.ac.shef.oak.com6510.SearchActivity" />
-        <activity android:name="uk.ac.shef.oak.com6510.InfoActivity" />
-        <activity android:name="uk.ac.shef.oak.com6510.ResultActivity" />
-        <activity android:name="uk.ac.shef.oak.com6510.ImageExtraActivity" />
+        <activity android:name=".MapActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".InfoActivity" />
+        <activity android:name=".ResultActivity" />
+        <activity android:name=".ImageExtraActivity" />
     </application>
 
 </manifest>

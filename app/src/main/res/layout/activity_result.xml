@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uk.ac.shef.oak.com6510.ResultActivity">
+    tools:context=".ResultActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/grid_recycler_view_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:gravity="center" />
 
 </android.support.design.widget.CoordinatorLayout>
