@@ -24,6 +24,6 @@ public interface PictureDAO {
 	@Query("SELECT * FROM picture_table ORDER BY id")
 	LiveData<List<Picture>> getAllPictures();
 
-	@Query("SELECT * FROM picture_table WHERE title LIKE :key OR description LIKE :key")
+	@Query("SELECT * FROM picture_table WHERE title LIKE '%' || :key || '%' OR description LIKE '%' || :key || '%'")
 	LiveData<List<Picture>> search(String key);
 }
