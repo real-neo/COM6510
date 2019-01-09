@@ -5,7 +5,7 @@ android {
         debug {
             keyAlias 'com4510'
             keyPassword 'com4510iscool'
-            storeFile file('/home/neo/StudioProjects/COM6510/keyStore.jks')
+            storeFile file('C:/Users/Alex/AndroidStudioProjects/COM6510/keyStore.jks')
             storePassword 'com4510iscool'
         }
     }
@@ -27,6 +27,10 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled false
         }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
     }
 }
 

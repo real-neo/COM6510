@@ -1,29 +1,21 @@
 package uk.ac.shef.oak.com6510;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.aprilapps.easyphotopicker.DefaultCallback;
@@ -33,11 +25,11 @@ import uk.ac.shef.oak.com6510.viewmodel.PictureViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-	private static final int REQUEST_READ_EXTERNAL_STORAGE = 2987;
-	private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 7829;
 	private PictureViewModel viewModel;
 	private RecyclerView recyclerView;
 	private PictureAdapter adapter;
+	private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
+			Manifest.permission.ACCESS_FINE_LOCATION};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Context context = getApplicationContext();
 		setTitle("Picture Manager - Gallery");
 
 		final int numberOfColumns = 3;
@@ -79,36 +70,24 @@ public class MainActivity extends AppCompatActivity {
 
 		adapter = new PictureAdapter();
 		recyclerView.setAdapter(adapter);
-//		adapter.setHasStableIds(true); // when it's enabled, app CRASHES!!!
 
-		checkPermissions(getApplicationContext());
+		if (!arePermissionsEnabled()) {
+			requestMultiplePermissions();
+		}
 
 		initEasyImage();
 
 		final FloatingActionButton fab = findViewById(R.id.fab_camera);
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				EasyImage.openCamera(MainActivity.this, 0);
-			}
-		});
+		fab.setOnClickListener(view -> EasyImage.openCamera(MainActivity.this, 0));
 
 		FloatingActionButton fabGallery = findViewById(R.id.fab_gallery);
-		fabGallery.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				EasyImage.openGallery(MainActivity.this, 0);
-			}
-		});
+		fabGallery.setOnClickListener(view -> EasyImage.openGallery(MainActivity.this, 0));
 
 		viewModel = ViewModelProviders.of(this).get(PictureViewModel.class);
-		viewModel.getAllPictures().observe(this, new Observer<List<Picture>>() {
-			@Override
-			public void onChanged(@Nullable List<Picture> pictures) {
-				//update recyclerView
-				adapter.setPictures(pictures);
-				PictureAdapter.setAllPictures(pictures);
-			}
+		viewModel.getAllPictures().observe(this, pictures -> {
+			//update recyclerView
+			adapter.setPictures(pictures);
+			PictureAdapter.setAllPictures(pictures);
 		});
 
 		recyclerView.addOnScrollListener(new MyScrollListener(fab));
@@ -146,51 +125,42 @@ public class MainActivity extends AppCompatActivity {
 				.setAllowMultiplePickInGallery(true);
 	}
 
-	private void checkPermissions(final Context context) {
-		int currentAPIVersion = Build.VERSION.SDK_INT;
-		if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
-			if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-				if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-					android.support.v7.app.AlertDialog.Builder alertBuilder = new android.support.v7.app.AlertDialog.Builder(context);
-					alertBuilder.setCancelable(true);
-					alertBuilder.setTitle("Permission necessary");
-					alertBuilder.setMessage("External storage permission is necessary");
-					alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-						@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-						public void onClick(DialogInterface dialog, int which) {
-							ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
-						}
-					});
-					android.support.v7.app.AlertDialog alert = alertBuilder.create();
-					alert.show();
+	private boolean arePermissionsEnabled() {
+		for (String permission : permissions) {
+			if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)
+				return false;
+		}
+		return true;
+	}
 
-				} else {
-					ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
-				}
-
+	private void requestMultiplePermissions() {
+		List<String> remainingPermissions = new ArrayList<>();
+		for (String permission : permissions) {
+			if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+				remainingPermissions.add(permission);
 			}
-			if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-				if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-					android.support.v7.app.AlertDialog.Builder alertBuilder = new android.support.v7.app.AlertDialog.Builder(context);
-					alertBuilder.setCancelable(true);
-					alertBuilder.setTitle("Permission necessary");
-					alertBuilder.setMessage("Writing external storage permission is necessary");
-					alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-						@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-						public void onClick(DialogInterface dialog, int which) {
-							ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
-						}
-					});
-					android.support.v7.app.AlertDialog alert = alertBuilder.create();
-					alert.show();
+		}
+		requestPermissions(remainingPermissions.toArray(new String[remainingPermissions.size()]), 101);
+	}
 
-				} else {
-					ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode == 101) {
+			for (int i = 0; i < grantResults.length; i++) {
+				if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+					if (shouldShowRequestPermissionRationale(permissions[i])) {
+						new AlertDialog.Builder(this)
+								.setMessage("Storage and location permissions are necessary")
+								.setPositiveButton("Allow", (dialog, which) -> requestMultiplePermissions())
+								.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+								.create()
+								.show();
+					}
+					return;
 				}
-
 			}
-
-
+			//all is good, continue flow
 		}
 	}
 
