@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 		initEasyImage();
 
-		FloatingActionButton fab = findViewById(R.id.fab_camera);
+		final FloatingActionButton fab = findViewById(R.id.fab_camera);
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -110,6 +110,32 @@ public class MainActivity extends AppCompatActivity {
 				PictureAdapter.setAllPictures(pictures);
 			}
 		});
+
+		recyclerView.addOnScrollListener(new MyScrollListener(fab));
+		recyclerView.addOnScrollListener(new MyScrollListener(fabGallery));
+	}
+
+	public class MyScrollListener extends RecyclerView.OnScrollListener {
+		FloatingActionButton fab;
+
+		MyScrollListener(FloatingActionButton fab) {
+			this.fab = fab;
+		}
+
+		@Override
+		public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+			if (dy > 0 || dy < 0 && fab.isShown())
+				fab.hide();
+		}
+
+		@Override
+		public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+
+			if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+				fab.show();
+			}
+			super.onScrollStateChanged(recyclerView, newState);
+		}
 	}
 
 	private void initEasyImage() {
