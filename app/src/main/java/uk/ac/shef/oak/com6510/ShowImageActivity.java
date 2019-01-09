@@ -1,19 +1,21 @@
 package uk.ac.shef.oak.com6510;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.media.ExifInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.IOException;
 
 import uk.ac.shef.oak.com6510.database.Picture;
+import uk.ac.shef.oak.com6510.viewmodel.PictureViewModel;
 
 import static uk.ac.shef.oak.com6510.PictureAdapter.decodeSampledBitmapFromResource;
 
@@ -28,6 +30,7 @@ public class ShowImageActivity extends AppCompatActivity {
 
 		ImageView imageView = findViewById(R.id.show_picture);
 		FloatingActionButton fab = findViewById(R.id.fab_info);
+		FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
 
 		element = (Picture) getIntent().getSerializableExtra("pic");
 
@@ -62,14 +65,23 @@ public class ShowImageActivity extends AppCompatActivity {
 						Toast.LENGTH_LONG).show();
 			}
 
-			fab.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					Intent intent = new Intent(ShowImageActivity.this, InfoActivity.class);
-					intent.putExtra("pic", element);
-					startActivity(intent);
-				}
+			fab.setOnClickListener(view -> {
+				Intent intent = new Intent(ShowImageActivity.this, InfoActivity.class);
+				intent.putExtra("pic", element);
+				startActivity(intent);
 			});
+
+			PictureViewModel viewModel = ViewModelProviders.of(this).get(PictureViewModel.class);
+
+			fabDelete.setOnClickListener(view -> new AlertDialog.Builder(this)
+					.setMessage("Delete?")
+					.setPositiveButton("Yes", (dialog, which) -> {
+						viewModel.delete(element);
+						ShowImageActivity.this.finish();
+					})
+					.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+					.create()
+					.show());
 		}
 	}
 }
