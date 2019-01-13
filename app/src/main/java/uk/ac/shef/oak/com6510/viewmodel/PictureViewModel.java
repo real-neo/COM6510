@@ -40,8 +40,4 @@ public class PictureViewModel extends AndroidViewModel {
 	public LiveData<List<Picture>> search(String key) {
 		return repository.search(key);
 	}
-
-	public PictureRepository getRepository() {
-		return repository;
-	}
 }

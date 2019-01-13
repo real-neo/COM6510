@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 	private void addImageElements(List<File> returnedPhotos) {
 		for (File file : returnedPhotos) {
 			Picture element = new Picture(file.getAbsolutePath(), file.getName());
-			viewModel.getRepository().insert(element);
+			viewModel.insert(element);
 		}
 	}
 }
