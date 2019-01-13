@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
 	private PictureViewModel viewModel;
 	private RecyclerView recyclerView;
 	private PictureAdapter adapter;
-	private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-			Manifest.permission.ACCESS_FINE_LOCATION};
+	private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,8 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
 	private void initEasyImage() {
 		EasyImage.configuration(this)
-				.setImagesFolderName("EasyImage sample")
-				.setCopyTakenPhotosToPublicGalleryAppFolder(true)
+				.setCopyTakenPhotosToPublicGalleryAppFolder(false)
 				.setCopyPickedImagesToPublicGalleryAppFolder(false)
 				.setAllowMultiplePickInGallery(true);
 	}
