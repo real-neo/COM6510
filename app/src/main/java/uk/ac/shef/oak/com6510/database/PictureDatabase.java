@@ -11,7 +11,6 @@ import android.content.Context;
  */
 @Database(entities = Picture.class, version = 3, exportSchema = false)
 public abstract class PictureDatabase extends RoomDatabase {
-
 	/**
 	 * The instance of PictureDatabase.
 	 */

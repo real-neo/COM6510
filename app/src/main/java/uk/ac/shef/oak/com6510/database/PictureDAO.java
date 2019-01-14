@@ -14,7 +14,6 @@ import java.util.List;
  */
 @Dao
 public interface PictureDAO {
-
 	/**
 	 * Insert picture into DB.
 	 *

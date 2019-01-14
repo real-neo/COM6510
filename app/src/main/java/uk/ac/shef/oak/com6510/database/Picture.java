@@ -13,7 +13,6 @@ import java.io.Serializable;
  */
 @Entity(tableName = "picture_table")
 public class Picture implements Serializable {
-
 	/**
 	 * ID of picture.
 	 */
