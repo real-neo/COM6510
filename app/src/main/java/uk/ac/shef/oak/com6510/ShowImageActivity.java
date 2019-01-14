@@ -1,19 +1,20 @@
 package uk.ac.shef.oak.com6510;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.media.ExifInterface;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.IOException;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.exifinterface.media.ExifInterface;
+import androidx.lifecycle.ViewModelProviders;
 import uk.ac.shef.oak.com6510.database.Picture;
 import uk.ac.shef.oak.com6510.viewmodel.PictureViewModel;
 

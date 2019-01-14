@@ -3,13 +3,13 @@ package uk.ac.shef.oak.com6510;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.media.ExifInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.exifinterface.media.ExifInterface;
 import uk.ac.shef.oak.com6510.database.Picture;
 
 import static uk.ac.shef.oak.com6510.PictureAdapter.decodeSampledBitmapFromResource;

@@ -7,10 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +28,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 import uk.ac.shef.oak.com6510.database.Picture;
 
 /**
@@ -94,7 +94,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 	 */
 	public static void setMarker() {
 		for (Picture p : pictures) {
-			if (p.getLon() != 0.0 && p.getLat() != 0.0) {
+			if (p.getLon() < 200 && p.getLat() < 200) {
 				Marker myMarker = mMap.addMarker(
 						new MarkerOptions()
 								.position(new LatLng(p.getLat(), p.getLon()))

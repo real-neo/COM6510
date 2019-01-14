@@ -1,12 +1,12 @@
 package uk.ac.shef.oak.com6510.database;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.media.ExifInterface;
-
 import java.io.IOException;
 import java.io.Serializable;
+
+import androidx.exifinterface.media.ExifInterface;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 /**
  * Picture class. As a element of database.
@@ -63,8 +63,8 @@ public class Picture implements Serializable {
 			ExifInterface exifInterface = new ExifInterface(picturePath);
 
 			double latLong[] = exifInterface.getLatLong();
-			this.lat = latLong != null ? latLong[0] : 0;
-			this.lon = latLong != null ? latLong[1] : 0;
+			this.lat = latLong != null ? latLong[0] : 200;
+			this.lon = latLong != null ? latLong[1] : 200;
 
 			this.date = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
 		} catch (IOException e) {
@@ -208,8 +208,8 @@ public class Picture implements Serializable {
 					{"Size", width + "x" + height},
 					{"Manufacturer", exifInterface.getAttribute(ExifInterface.TAG_MAKE)},
 					{"Model", exifInterface.getAttribute(ExifInterface.TAG_MODEL)},
-					{"Longitude", String.valueOf(lon)},
-					{"Latitude", String.valueOf(lat)}
+					{"Longitude", lon < 200 ? String.valueOf(lon) : null},
+					{"Latitude", lat < 200 ? String.valueOf(lat) : null}
 			};
 		} catch (IOException e) {
 			e.printStackTrace();
