@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
 		EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
 			/**
-			 * {@inheritDoc}
+			 * Do something if occurs error when pick image.
 			 */
 			@Override
 			public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 			}
 
 			/**
-			 * {@inheritDoc}
+			 * Do something when some images were picked.
 			 */
 			@Override
 			public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 			}
 
 			/**
-			 * {@inheritDoc}
+			 * Do something when user cancel operation.
 			 */
 			@Override
 			public void onCanceled(EasyImage.ImageSource source, int type) {
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * Hide fab when scroll recycler view.
 		 */
 		@Override
 		public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * Show fab when stop scrolling recycler view.
 		 */
 		@Override
 		public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {

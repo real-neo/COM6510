@@ -106,7 +106,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Create a view holder.
 	 */
 	@NonNull
 	@Override
@@ -118,7 +118,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Bind pictures to view holder.
 	 */
 	@Override
 	public void onBindViewHolder(@NonNull PictureHolder pictureHolder, int position) {
@@ -161,7 +161,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Get pictures count in view holder.
 	 */
 	@Override
 	public int getItemCount() {

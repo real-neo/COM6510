@@ -266,7 +266,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * When map is ready, show my location and markers on map.
 	 */
 	@Override
 	public void onMapReady(GoogleMap googleMap) {

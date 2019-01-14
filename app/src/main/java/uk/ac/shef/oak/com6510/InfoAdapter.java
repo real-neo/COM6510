@@ -28,7 +28,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> 
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Create a view holder.
 	 */
 	@NonNull
 	@Override
@@ -38,7 +38,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> 
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Bind string to view holder.
 	 */
 	@Override
 	public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
@@ -47,7 +47,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> 
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Get string array count in view holder.
 	 */
 	@Override
 	public int getItemCount() {
