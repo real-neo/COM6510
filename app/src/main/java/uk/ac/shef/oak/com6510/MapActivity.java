@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -104,35 +102,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 				markers.put(myMarker, p);
 			}
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.map_menu, menu);
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		Intent intent;
-		switch (id) {
-			case R.id.menu_gallery:
-				intent = new Intent(this, MainActivity.class);
-				this.startActivity(intent);
-				//return true;
-			case R.id.menu_search:
-				intent = new Intent(this, SearchActivity.class);
-				this.startActivity(intent);
-				//return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	/**
