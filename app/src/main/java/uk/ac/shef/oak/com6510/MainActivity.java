@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
 	/**
 	 * Permission list. For request on first run.
 	 */
-	private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
+	private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+			Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 	/**
 	 * {@inheritDoc}
@@ -122,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
 	 */
 	private void initEasyImage() {
 		EasyImage.configuration(this)
-				.setCopyTakenPhotosToPublicGalleryAppFolder(false)
+				.setImagesFolderName("Picture Manager")
+				.setCopyTakenPhotosToPublicGalleryAppFolder(true)
 				.setCopyPickedImagesToPublicGalleryAppFolder(false)
 				.setAllowMultiplePickInGallery(true);
 	}
