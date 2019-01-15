@@ -1,9 +1,17 @@
 package uk.ac.shef.oak.com6510;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,7 +23,16 @@ import uk.ac.shef.oak.com6510.viewmodel.PictureViewModel;
 /**
  * Info activity of app which shows information of picture.
  */
-public class InfoActivity extends AppCompatActivity {
+public class InfoActivity extends AppCompatActivity implements OnMapReadyCallback {
+	/**
+	 * Google map object.
+	 */
+	private static GoogleMap mMap;
+	/**
+	 * Picture to be shown.
+	 */
+	private Picture element = null;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -30,7 +47,7 @@ public class InfoActivity extends AppCompatActivity {
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setNestedScrollingEnabled(false);
 
-		Picture element = (Picture) getIntent().getSerializableExtra("pic");
+		element = (Picture) getIntent().getSerializableExtra("pic");
 		if (element != null) {
 			InfoAdapter mAdapter = new InfoAdapter(element);
 			recyclerView.setAdapter(mAdapter);
@@ -52,6 +69,43 @@ public class InfoActivity extends AppCompatActivity {
 
 				Toast.makeText(InfoActivity.this, "Save successfully!\nTitle: " + element.getTitle() + "\nDescription: " + element.getDescription(), Toast.LENGTH_LONG).show();
 			});
+
+			// Obtain the SupportMapFragment and get notified when the map is ready to be used.
+			SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.mini_map);
+			if (element.getLon() < 200 && element.getLat() < 200) {
+				if (mapFragment != null) {
+					mapFragment.getMapAsync(this);
+				}
+			} else {
+				mapFragment.getView().setVisibility(View.INVISIBLE);
+			}
+		}
+	}
+
+	/**
+	 * When map is ready, show my location and markers on map.
+	 */
+	@Override
+	public void onMapReady(GoogleMap googleMap) {
+		mMap = googleMap;
+		mMap.setMinZoomPreference(14);
+		LatLng location = new LatLng(element.getLat(), element.getLon());
+		mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+		mMap.getUiSettings().setZoomControlsEnabled(false);
+		setMarker();
+	}
+
+	/**
+	 * Add marker on map.
+	 */
+	public void setMarker() {
+		if (element.getLon() < 200 && element.getLat() < 200) {
+			mMap.addMarker(
+					new MarkerOptions()
+							.position(new LatLng(element.getLat(), element.getLon()))
+							.visible(true)
+			);
 		}
 	}
 }
